@@ -41,6 +41,7 @@ class Agros_class:
         Returns
         nothing
         ---------
+
         '''
         self.data = None
         self.file = False
@@ -209,15 +210,17 @@ class Agros_class:
         data_filtered = self.data[self.data['Year'] == year]
             
         # Set area size based on a third relevant variable (here, 'land_area' column)
-        area_size = data_filtered['ag_land_quantity']/100
+        area_size = data_filtered['ag_land_quantity']/1000
         
         # Plot scatter plot
-        plt.scatter(data_filtered['fertilizer_quantity'], data_filtered['output_quantity'], s=area_size, c=data_filtered['fertilizer_quantity'], cmap='Blues', alpha=0.4, edgecolors='grey', linewidth=2)
+        plt.scatter(data_filtered['fertilizer_quantity'], data_filtered['output_quantity'], s=area_size,  alpha=0.4, edgecolors='grey', linewidth=2)
 
         # Set plot title and axis labels
         plt.title(f"Gapminder Plot for year {year}")
         plt.xlabel("Fertilizer Quantity")
         plt.ylabel("Output Quantity")
+        plt.xscale("log")
+        plt.yscale("log")
             
         # Show plot
         plt.show()
