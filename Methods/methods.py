@@ -1,40 +1,28 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[36]:
-
-
-#pylint: disable=wrong-import-position
-# pylint: disable=no-member
 get_ipython().system('pip install download')
+
 from datetime import datetime
 import sys
-import matplotlib.pyplot as plt # type: ignore
-import pandas as pd # type: ignore
-sys.path.append("./Methods")
-plt.style.use('seaborn')
-#pylint: disable=wrong-import-position
-#from download import download_file #pylint: disable=wrong-import-position
-#from emission import add_emission #pylint: disable=wrong-import-position
-from statsmodels.tsa.arima_model import ARIMA
-import statsmodels.api as sm
-import numpy as np
-import itertools
-from sklearn.metrics import mean_squared_error
-import warnings
 import os
 import urllib.request
+import itertools
+import warnings
+
+import numpy as np
 import pandas as pd
 import seaborn as sns
+import matplotlib.pyplot as plt
+from sklearn.metrics import mean_squared_error
+from statsmodels.tsa.arima_model import ARIMA
+import statsmodels.api as sm
 
-
-# In[153]:
+sys.path.append("./Methods")
+plt.style.use('seaborn')
 
 
 class Agros_class:
     def __init__(self):
         '''
-        Init method of the class EnergyClass
+        Init method of the class Agros_class
         Parameters
         nothing
         ------------
