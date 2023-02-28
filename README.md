@@ -8,7 +8,7 @@ To get hands on with the project, download the showcase notebook which can then 
 
 For additional information on the code structure and how to use it, refer to the prototype notebook repository which will have a file of the detailed code. 
 
-The project authors are Hugo Franco Ribeiro (55446@novasbe.pt), Li Linyan (@novasbe.pt), Matilde Pesce (53258@novasbe.pt), William Esary(@novasbe.pt), Julia Bak (@novasbe.pt)
+The project authors are Hugo Franco Ribeiro (55446@novasbe.pt), Li Linyan (54596@novasbe.pt), Matilde Pesce (53258@novasbe.pt), William Esary(38896@novasbe.pt), Julia Bak (53781@novasbe.pt)
 
 
 
