@@ -1,29 +1,14 @@
 # Group_15
 
-The methods.py module we constructed contains a class built to help users analyzize data on agrcultural total factor productivity providing tools for:
-- Downloading the file 
-- Reading the CSV and Turning it into a Pandas dataframe 
-- Anaylzing the available data using methods such as gapminders and correlation matrices to observe differences in outputs 
+2612 Advanced Programming for Data Science 2022/2023
 
-The notebook Storytelling.ipynb provides a showcase of how the Agros_class from the methods module can be used to analyse the USDA’s Agricultural total factor productivity data. We use our created class to preform some simple data analysis to further showcase our methods. 
+The current repository serves for the collection of methods and material for a project that aims at gaining valuable insight from agricultural output for various countries in order to contribute to green energy transition. This repository contains methods that allow for analysis of data containing variables that determine agricultural total factor productivity. 
 
-## HOW TO USE THE Agros_class 
+To get hands on with the project, download the showcase notebook which can then be run and readapted to fit the user’s analytical goal. The Showcase notebook can serve to the analysis the USDA’s Agricultural total factor productivity data. We use the class Agros_class to perform methods that allow for further insight to the user of the data. The analysis can be readapted to other countries by changing the variable names.
 
-To use the class call the following code: _from methods import Agros_class_ 
+For additional information on the code structure and how to use it, refer to the prototype notebook repository which will have a file of the detailed code. 
 
-To initiate the class simply create a variable such as: _your_variable=Agros_class()_
-
-You are now able to use the methods created and described in methods.py:
-download_file()
-read_data()
-get_countries()
-plot_quantity_correlation()
-plot_output_area_chart()
-gapminder()
-
-This project was carried out for the Advanced Programming for Data Science course at Nova SBE.
-
-Project Authors: Julia Bak, Hugo Franco Ribeiro, Li Linyan, Matilde Pesce, William Esary
+The project authors are Hugo Franco Ribeiro (55446@novasbe.pt), Li Linyan (@novasbe.pt), Matilde Pesce (53258@novasbe.pt), William Esary(@novasbe.pt), Julia Bak (@novasbe.pt)
 
 
 

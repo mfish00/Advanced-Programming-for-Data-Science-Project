@@ -177,13 +177,9 @@ class Agros_class:
         
         # Compute total output for each year
         data_to_plot = filtered_data.groupby('Year').sum().loc[:, 'output':'output_quantity']
-        data_to_plot['Total'] = data_to_plot.sum(axis=1)
+        data_to_plot['Entity'] = data_to_plot.sum(axis=1)
         
-        # Plot total output over time for each country
-        for country in countries:
-            plt.plot(data_to_plot.index, filtered_data[filtered_data['Entity']==country]['output'], label=country)
-        
-        plt.plot(data_to_plot.index, data_to_plot['Total'], label='Total')
+        plt.plot(data_to_plot.index, data_to_plot['Entity'], label= countries)
         plt.legend()
         plt.xlabel('Year')
         plt.ylabel('Output (US$)')
