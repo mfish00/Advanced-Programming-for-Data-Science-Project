@@ -36,6 +36,17 @@ class Agros_class:
         self.download_file()
         self.read_data()
 
+        # Dictionary for merging countries
+        self.merge_dict = {
+            'United States': 'United States of America',
+            'Dominican Republic': 'Dominica',
+            'Democratic Republic of Congo': 'Democratic Republic of the Congo',
+            'Congo': 'Republic of the Congo',
+            'Bahamas': 'The Bahamas',
+            'Tanzania': 'United Republic of Tanzania',
+            'Eswatini': 'eSwatini'
+        }
+
     def download_file(self):
         '''
         Download data file into downloads/ directory
@@ -208,4 +219,21 @@ class Agros_class:
             
         # Show plot
         plt.show()
+
+    def choropleth(self, year):
+        '''
+        Creates a choropleth map of the world for a given year
+        Parameters
+        ----------
+        year : int
+        The year for which the map should be created
+        ------------
+        Returns
+        -------
+        A choropleth map of the world for a given year.
+        '''
+
+        if not isinstance(year, int):
+            raise ValueError("Year must be an integer.")
+        
 
