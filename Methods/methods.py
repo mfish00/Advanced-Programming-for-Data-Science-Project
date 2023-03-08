@@ -14,6 +14,7 @@ import matplotlib.pyplot as plt
 from sklearn.metrics import mean_squared_error
 from statsmodels.tsa.arima_model import ARIMA
 import statsmodels.api as sm
+import geopandas as gpd
 
 sys.path.append("./Methods")
 plt.style.use('seaborn')
@@ -60,15 +61,36 @@ class Agros_class:
         url = "https://raw.githubusercontent.com/owid/owid-datasets/master/datasets/Agricultural%20total%20factor%20productivity%20(USDA)/Agricultural%20total%20factor%20productivity%20(USDA).csv"
         file_path = "downloads/data_file.csv"
         
+        geo_url = "https://www.naturalearthdata.com/http//www.naturalearthdata.com/download/50m/cultural/ne_50m_admin_0_countries.zip"
+        geo_path = "downloads/ne_50m_admin_0_countries.zip"
+        
         if not os.path.exists("downloads"):
             os.makedirs("downloads")
         
         if os.path.exists(file_path):
-            print("File already exists, skipping download")
+            print("Agri File already exists, skipping download")
         else:
-            print("Downloading file from URL...")
+            print("Downloading Agri file from URL...")
             urllib.request.urlretrieve(url, file_path)
-            print("File downloaded successfully")
+            print("Agri File downloaded successfully")
+            
+            
+        try:
+            if not os.path.exists(geo_path):
+                req = urllib.request.Request(
+                    geo_url,
+                    data=None,
+                    headers={
+                        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36'
+                    }
+                )
+                with urllib.request.urlopen(req) as response, open(geo_path, 'wb') as out_file:
+                    out_file.write(response.read())
+                print("Geo File downloaded successfully")
+            else:
+                print("Geo File already exists, skipping download")
+        except Exception as e:
+            print(f"Error downloading Geo file: {e}")
         
         self.file = True
 
@@ -85,9 +107,17 @@ class Agros_class:
         file_path = "downloads/data_file.csv"
         if os.path.exists(file_path):
             self.data = pd.read_csv(file_path)
-            print("Data loaded successfully into a Pandas DataFrame")
+            print("Agri Data loaded successfully into a Pandas DataFrame")
         else:
-            print("Data file not found")
+            print("Agri Data file not found")
+            
+        geo_path = "downloads/ne_50m_admin_0_countries.zip"    
+        if os.path.exists(geo_path):
+            shpfile = "zip://downloads/ne_50m_admin_0_countries.zip"
+            self.geo = gpd.read_file(shpfile)
+            print("Geo Data loaded successfully into a GeoPandas DataFrame")
+        else:
+            print("Geo Data file not found")
 
     def get_countries(self):
         '''
@@ -221,19 +251,38 @@ class Agros_class:
         plt.show()
 
     def choropleth(self, year):
-        '''
-        Creates a choropleth map of the world for a given year
+        """
+        Creates a choropleth map of the world for a given year.
+    
         Parameters
         ----------
         year : int
-        The year for which the map should be created
-        ------------
+            The year for which the map should be created.
+
         Returns
         -------
         A choropleth map of the world for a given year.
-        '''
-
+        """
+    
         if not isinstance(year, int):
             raise ValueError("Year must be an integer.")
         
-
+        # Filter data for given year
+        self.data = self.data[self.data['Year'] == year]
+        
+        # Rename country names to match the ones in the geographical data
+        self.data['Entity'] = self.data['Entity'].replace(self.merge_dict) 
+        
+        # Read geographical data
+        geo_data = self.geo[['ADMIN', 'geometry']]
+                
+        # Merge dataframes
+        merge_data = geo_data.merge(self.data, left_on='ADMIN', right_on='Entity')
+        
+        # Plot choropleth map
+        fig, ax = plt.subplots(1, figsize=(20, 10))
+        ax.set_title(f"Agricultural total factor productivity in {year}", fontsize=20)
+        merge_data.plot(column='tfp', cmap='Accent', ax=ax, legend=True,
+                        legend_kwds={'label': "Agricultural total factor productivity"})
+        plt.show()
+        
