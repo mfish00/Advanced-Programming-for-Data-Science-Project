@@ -243,8 +243,12 @@ class Agros_class:
             additional_points=31
             yhat = model_fit.predict(len(y), len(y)+additional_points-1, typ='levels')
             xhat=np.arange(0, additional_points)+2018+1
-        
-        
             plt.plot(x, y,c=colors[i],label=country)
-            plt.plot(xhat, yhat,c=colors[i],linestyle='--',label=country)  
+            plt.plot(xhat, yhat,c=colors[i],linestyle='--')
+            plt.xlabel('Year')
+            plt.ylabel('TFP')
+            plt.legend()
+        
+      
+         
 
