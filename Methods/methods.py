@@ -142,7 +142,7 @@ class Agros_class:
         else:
             print("Data not loaded yet")
     
-    def plot_quantity_correlation(self):
+    def plot_quantity_correlations(self):
         '''
         Plot a correlation matrix between the "_quantity" columns in the dataset
         Parameters
@@ -159,10 +159,12 @@ class Agros_class:
             # Compute correlation matrix
             corr = self.data[quantity_cols].corr()
             # Plot heatmap of correlation matrix
+            plt.figure(figsize=(10, 10))
             sns.heatmap(corr, annot=True, cmap='coolwarm')
             plt.show()
         else:
             print("Data not loaded yet")
+    
     
     def plot_output_area_chart(self, country=None, normalize=False):
         """
@@ -184,17 +186,20 @@ class Agros_class:
             return
 
         if country is None or country == 'World':
-            data_to_plot = self.data.groupby('Year').sum().loc[:, 'ag_land_quantity':'irrigation_quantity']
+            data_to_plot = self.data.groupby('Year').sum().loc[:, 'crop_output_quantity':'fish_output_quantity']
         else:
             if country not in self.get_countries():
                 raise ValueError(f"{country} does not exist in the dataset")
-
-            data_to_plot = self.data[self.data['Entity'] == country].set_index('Year').loc[:, 'ag_land_quantity':'irrigation_quantity']
-
+            
+            data_to_plot = self.data[self.data['Entity'] == country].groupby('Year').sum().loc[:, 'crop_output_quantity':'fish_output_quantity']
+            
         if normalize:
             data_to_plot = data_to_plot.divide(data_to_plot.sum(axis=1), axis=0) * 100
-            
+
+       
+        
         data_to_plot.plot.area()
+        
         plt.xlabel("Year")
         plt.ylabel("Output")
         plt.title(f"{'World' if country is None else country} Output{' (Normalized)' if normalize else ''}")
