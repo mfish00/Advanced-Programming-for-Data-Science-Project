@@ -123,6 +123,17 @@ class Agros_class:
             print("Geo Data loaded successfully into a GeoPandas DataFrame")
         else:
             print("Geo Data file not found")
+        # create a list of values to drop
+        values_to_drop = ['Asia', 'Caribbean', 'Central Africa', 'Central America', 'Central Asia',
+                  'Central Europe', 'Developed Asia', 'Developed countries', 'East Africa', 'Eastern Europe',
+                  'Europe', 'Former Soviet Union', 'High income', 'Horn of Africa', 'Latin America and the Caribbean',
+                  'Least developed countries', 'Low income', 'Lower-middle income', 'North Africa', 'North America',
+                  'Northeast Asia', 'Northern Europe', 'Oceania', 'Pacific', 'Sahel', 'South Asia', 'Southeast Asia',
+                  'Southern Africa', 'Southern Europe', 'Sub-Saharan Africa', 'Upper-middle income', 'West Africa',
+                  'West Asia', 'Western Europe']
+
+        # drop rows based on the values in the 'entity' column
+        self.data= self.data[~self.data['Entity'].isin(values_to_drop)]
         
             
         
@@ -201,7 +212,7 @@ class Agros_class:
         data_to_plot.plot.area()
         
         plt.xlabel("Year")
-        plt.ylabel("Output")
+        plt.ylabel("Output (in million units)")
         plt.title(f"{'World' if country is None else country} Output{' (Normalized)' if normalize else ''}")
         plt.show()
     
@@ -228,19 +239,18 @@ class Agros_class:
         
         # Filter data for selected countries
         filtered_data = self.data[self.data['Entity'].isin(countries)]
+        filtered_data=filtered_data.set_index('Year')
         
-        # Compute total output for each year
-        data_to_plot = filtered_data.groupby('Year').sum().loc[:, 'output':'output_quantity']
         
         
         # Plot total output over time for each country
         for country in countries:
-            plt.plot(data_to_plot.index, filtered_data[filtered_data['Entity']==country]['output'], label=country, color='blue')
+            plt.plot(filtered_data.index, filtered_data[filtered_data['Entity']==country]['output_quantity'], label=country, color='blue')
         
        
         plt.legend()
         plt.xlabel('Year')
-        plt.ylabel('Output (US$)')
+        plt.ylabel('Output (in million units)')
         plt.show()
   
     
