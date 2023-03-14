@@ -123,7 +123,6 @@ class Agros_class:
             print("Geo Data loaded successfully into a GeoPandas DataFrame")
         else:
             print("Geo Data file not found")
-<<<<<<< HEAD
         # create a list of values to drop
         values_to_drop = ['Asia', 'Caribbean', 'Central Africa', 'Central America', 'Central Asia',
                   'Central Europe', 'Developed Asia', 'Developed countries', 'East Africa', 'Eastern Europe',
@@ -135,8 +134,6 @@ class Agros_class:
 
         # drop rows based on the values in the 'entity' column
         self.data= self.data[~self.data['Entity'].isin(values_to_drop)]
-=======
->>>>>>> Matilde
         
             
         
@@ -244,7 +241,6 @@ class Agros_class:
         filtered_data = self.data[self.data['Entity'].isin(countries)]
         filtered_data=filtered_data.set_index('Year')
         
-<<<<<<< HEAD
         
         
         # Plot total output over time for each country
@@ -252,17 +248,6 @@ class Agros_class:
             plt.plot(filtered_data.index, filtered_data[filtered_data['Entity']==country]['output_quantity'], label=country, color='blue')
         
        
-=======
-        # Compute total output for each year
-        data_to_plot = filtered_data.groupby('Year').sum().loc[:, 'output':'output_quantity']
-        data_to_plot['Total'] = data_to_plot.sum(axis=1)
-        
-        # Plot total output over time for each country
-        for country in countries:
-            plt.plot(data_to_plot.index, filtered_data[filtered_data['Entity']==country]['output'], label=country, color='blue')
-        
-        plt.plot(data_to_plot.index, data_to_plot['Total'], label='Total', color='green')
->>>>>>> Matilde
         plt.legend()
         plt.xlabel('Year')
         plt.ylabel('Output (in million units)')
@@ -423,7 +408,7 @@ class Agros_class:
             # Fit ARIMA model to the data
             model = auto_arima(country_data["tfp"],
                                start_p=1, start_q=1, max_p=5, max_q=5,
-                               m=1, start_P=0, seasonal=True, d=None, D=0,
+                               m=1, start_P=0, seasonal=True, d=None, D=1,
                                trace=True, error_action="ignore", suppress_warnings=True, stepwise=True)
 
             # Make predictions for future years
